@@ -1,0 +1,12 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <Link To="Identity/Account/Logout" Class="btn btn-outline-info">
+            <BarIcon IconName="@("fa-sign-out-alt")"></BarIcon>
+            Salir
+        </Link>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Identity/Account/Register" class="nav-link">Registrarse</a>
+        <a href="Identity/Account/Login" class="nav-link" style="margin-left: 7px;">Inicar Sesión</a>
+    </NotAuthorized>
+</AuthorizeView>

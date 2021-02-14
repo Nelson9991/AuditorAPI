@@ -1,0 +1,46 @@
+﻿@page
+@model LoginModel
+
+<form id="account" method="post">
+    <div class="py-4 my-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row mb-4">
+            <div class="col-8 offset-2">
+                <div class="card shadow">
+                    <div class="card-body px-lg-5 pt-2">
+                        <h3 class="col-12 text-info text-center py-3">Inicio de Sesión</h3>
+                        <hr/>
+                        <div class="py-2">
+                            <input asp-for="Input.Email" class="form-control" placeholder="Email"/>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="Input.Password" class="form-control" placeholder="Contraseña"/>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <div class="checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe"/>
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="py-1">
+                            <button type="submit" class="btn btn-success form-control">Inicia Sesión</button>
+                        </div>
+                        <div class="py-1">
+                            <p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Crea una cuenta</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Auditor.Models
+@using System.Security.Claims
+
+@inject SignInManager<UsuarioSistema> SignInManager
+@inject UserManager<UsuarioSistema> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hola @User.FindFirst(x => x.Type == ClaimTypes.GivenName).Value</a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="Identity" asp-page="/Account/Logout" class="btn btn-outline-info">
+                <i class="fas fa-sign-out-alt"></i>
+                Salir
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Registrarse</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar Sesión</a>
+        </li>
+    }
+</ul>
