@@ -31,8 +31,9 @@ namespace Auditor.Server.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "El campo {0} es requerido")]
+            [EmailAddress(ErrorMessage = "Ingrese un email válido")]
+            [Display(Name = "Email")]
             public string Email { get; set; }
         }
 
@@ -59,8 +60,8 @@ namespace Auditor.Server.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Restablecer Contraseña",
+                    $"Por favor para restrablecer tu contraceña has <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>click aqui</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

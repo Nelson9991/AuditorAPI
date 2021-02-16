@@ -30,15 +30,20 @@
                             <button type="submit" class="btn btn-success form-control">Inicia Sesión</button>
                         </div>
                         <div class="py-1">
-                            <p>
-                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Crea una cuenta</a>
-                            </p>
+
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="d-block mb-1">Crea una cuenta</a>
+
+
+                            <a id="forgot-password" asp-page="./ForgotPassword" class="d-block mb-1">Olvidó su contraseña?</a>
+
+
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="d-block mb-1">Reenviar email de confirmacion</a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
 @section Scripts {

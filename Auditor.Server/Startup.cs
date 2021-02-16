@@ -17,11 +17,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Auditor.DataAccess.MappingConfig;
 using Auditor.Models;
+using Auditor.Server.Helpers;
 using AutoMapper;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Auditor.Server
 {
@@ -42,10 +45,25 @@ namespace Auditor.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<UsuarioSistema>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+            services.AddIdentity<UsuarioSistema, IdentityRole>(
+                    options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI()
+                .AddErrorDescriber<SpanishIdentityErrorDescriber>();
+
+            services.Configure<MailJetSettings>(Configuration.GetSection("MailJetSettings"));
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
             services
                 .AddBlazorise(options =>
                 {
@@ -64,6 +82,7 @@ namespace Auditor.Server
             services
                 .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<UsuarioSistema>
                 >();
+
             services.AddHttpContextAccessor();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
